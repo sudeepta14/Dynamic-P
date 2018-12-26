@@ -9,3 +9,29 @@ class Solution {
         return curMax;
     }
 }
+
+There are two ways the robber can gather money --
+
+1 by robbing the first house and the third house
+2 by robbing the second and fourth house.
+
+We need to check all items in the array. 
+Then we have to keep the prevMax --- odd elements
+curMax -- even elements and then ---- curMax is the variable which will store the max Value. 
+
+Time Complexity : O(n)
+Space Complexity : O(1)
+
+curMax = 1
+prevMax = 0 
+
+curMax = 2
+prevMax = 1
+
+curMax = 4
+prevMax = 2
+
+curMax = 4
+prevMax = 4
+
+loop exits.
