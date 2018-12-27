@@ -20,3 +20,27 @@ class Solution {
 
 Time Complexity : O(N * 2N)
 Space Complexity : O(1)
+
+Dynamic Programming:
+
+class Solution {
+    public int countSubstrings(String s) {
+      int n = s.length();
+        int count = 0;
+        int[][] dp = new int[n][n];
+        for(int i= n-1; i>=0; i--){
+            char c = s.charAt(i);
+            for(int j = i; j<n; j++){
+                char x = s.charAt(j);
+                if(x == c && (j-i < 3 || dp[i+1][j-1] == 1)){
+                    dp[i][j] = 1;
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
+
+Time Complexity : O(N*N)
+Space Complexity : O(1)
