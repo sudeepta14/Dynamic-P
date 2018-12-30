@@ -1,0 +1,27 @@
+class Solution {
+    public int countCornerRectangles(int[][] grid) {
+        int m = grid.length;
+        int n= grid[0].length;
+        int res = 0;
+        int[][] dp = new int[n][n];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(grid[i][j] == 0){
+                    continue;
+                }
+                for(int k = j+1; k<n; k++){
+                    if(grid[i][k] == 0){
+                        continue;
+                    }
+                    res += dp[j][k];
+                    dp[j][k]++;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+Time Complexity : O(m *n2)
+Space Complexity : O(n2)
+
