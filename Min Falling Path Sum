@@ -1,0 +1,27 @@
+class Solution {
+    public int minFallingPathSum(int[][] A) {
+      for(int i=1; i<A.length;i++){
+          for(int j=0; j<A.length; j++){
+              A[i][j]+= minOfThree(A, i-1, j);
+          }
+      }
+        int res = Integer.MAX_VALUE;
+        for(int m=0; m<A.length; m++){
+            res = Math.min(res, A[A.length-1][m]);
+        }
+        return res;
+    }
+    public int minOfThree(int[][] A, int i, int j){
+        int min = A[i][j];
+        if(j>0){
+            min = Math.min(min, A[i][j-1]);
+        }
+        if(j < A.length-1){
+            min = Math.min(min, A[i][j+1]);
+        }
+        return min;
+    }
+}
+
+Time Complexity: O(n2)
+Space Complexity : O(n2)
