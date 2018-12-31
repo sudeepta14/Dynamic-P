@@ -1,0 +1,43 @@
+Recursion:
+class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+        int count = 0;
+        for(int s=0; s<A.length-2; s++){
+            int d = A[s+1] - A[s];
+            for(int e = s+2; e<A.length; e++){
+                int i;
+                for(i=s+1; i<A.length;i++){
+                    if(A[i]-A[i-1] != d){
+                        break;
+                    }
+                }
+                if(i>e){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
+Time Complexity: O(n3)
+Space Complexity: O(1)
+
+Dynamic Programming:
+
+class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+        int[] dp = new int[A.length];
+        int sum=0;
+        for(int i=2; i<A.length; i++){
+            if(A[i] - A[i-1] == A[i-1] - A[i-2]){
+                dp[i] = 1 + dp[i-1];
+                sum += dp[i];
+            }
+        }
+        return sum;
+    }
+}
+
+Time Complexity : O(n)
+Space Complexity : O(n)
+
