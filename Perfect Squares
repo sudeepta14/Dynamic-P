@@ -1,0 +1,27 @@
+class Solution {
+    public int numSquares(int n) {
+         Queue<Integer> queue = new LinkedList<>();
+        queue.add(n);
+        int depth = 0;
+        while(!queue.isEmpty()){
+            depth++;
+            int size = queue.size();
+            for(int i=0;i<size;i++){
+                int temp = queue.remove();
+                int sqrt = (int) Math.sqrt(temp);
+                for(int j=sqrt; j>=1;j--){
+                    int tmp = temp - j*j;
+                    if(tmp==0){
+                        return depth;
+                    }else{
+                        queue.add(tmp);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+}
+
+Time Complexity : O(n)
+Space Complexity : O(n)
