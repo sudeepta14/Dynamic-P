@@ -1,0 +1,26 @@
+class Solution {
+ public int knightDialer(int N) {
+  long MOD = 1_000_000_007;
+  long[] preNums = new long[10];
+  Arrays.fill(preNums, 1);
+  for (int i = 2; i <= N; i++) {
+   long[] curNums = new long[10];
+   curNums[0] = (preNums[4] + preNums[6]) % MOD;
+   curNums[1] = (preNums[6] + preNums[8]) % MOD;
+   curNums[2] = (preNums[7] + preNums[9]) % MOD;
+   curNums[3] = (preNums[4] + preNums[8]) % MOD;
+   curNums[4] = (preNums[3] + preNums[9] + preNums[0]) % MOD;
+   curNums[6] = (preNums[1] + preNums[7] + preNums[0]) % MOD;
+   curNums[7] = (preNums[2] + preNums[6]) % MOD;
+   curNums[8] = (preNums[1] + preNums[3]) % MOD;
+   curNums[9] = (preNums[2] + preNums[4]) % MOD;
+   preNums = curNums;
+  }
+  long result = 0;
+  for (long num : preNums) {
+   result += num;
+   result %= MOD;
+  }
+  return (int)result;
+ }
+}
