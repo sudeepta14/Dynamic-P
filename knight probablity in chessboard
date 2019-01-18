@@ -1,0 +1,33 @@
+class Solution {
+    public double knightProbability(int N, int K, int r, int c) {
+        int[] dr = {2,2,1,1,-1,-1,-2,-2};
+        int[] dc = {1,-1,2,-2,2,-2,1,-1};
+        double[][] dp = new double[N][N];
+        dp[r][c]=1;
+        for(;K>0;K--){
+            double[][] dp2 = new double[N][N];
+            for(int sr = 0; sr<N;sr++){
+                for(int sc=0;sc<N;sc++){
+                   for(int k=0;k<8;k++){
+                        int cr = sr + dr[k];
+                        int cc = sc + dc[k];
+                       if(0<=cr && cr<N && 0<=cc && cc<N){
+                           dp2[cr][cc]+=dp[sr][sc]/8.0;
+                       }
+                    }
+                }
+            }
+            dp = dp2;
+        }
+        double ans =0.0;
+        for(double[] row: dp){
+            for(double x: row){
+                ans+=x;
+            }
+        }
+        return ans;
+    }
+}
+
+O(k*n2)
+Space Complexity : O(n2)
