@@ -1,0 +1,46 @@
+Dynamic Programming
+
+class Solution {
+    public int findTargetSumWays(int[] nums, int S){
+      int sum=0;
+        for(int num:nums){
+            sum+=num;
+        }
+        if(sum<S || (sum+S)%2 != 0){
+            return 0;
+        }
+        int target = (sum+S)/2;
+        int[] dp = new int[target+1];
+        dp[0]=1;
+        for(int i=0; i<nums.length;i++){
+            for(int j=target; j>=nums[i];j--){
+                dp[j]+=dp[j-nums[i]];
+            }
+        }
+        return dp[target];
+    }
+}
+
+
+Time complexity will be slower as compared to recursion DFS. 
+
+class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        if(nums==null||nums.length==0){
+            return 0;
+        }
+        int count = 0;
+         return calculate(nums, 0, 0, S, count);
+        
+    }
+    public int calculate(int[] nums, int i, int sum, int target, int count){
+        if(i==nums.length){
+            if(sum==target){
+                count++;
+            }
+            return count;
+        }
+        return calculate(nums, i+1, sum+nums[i], target, count) + calculate(nums, i+1, sum-nums[i], target, count);
+    }
+}
+
