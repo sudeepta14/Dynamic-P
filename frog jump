@@ -1,0 +1,38 @@
+class Solution {
+    public boolean canCross(int[] stones) {
+        if (stones == null || stones.length == 0) return false;
+        if (stones[1] - stones[0] != 1) return false;
+        // key = K
+        HashMap<Integer, Boolean>[] mem = new HashMap[stones.length];
+        for (int i = 0; i < stones.length; i++) {
+            mem[i] = new HashMap<Integer, Boolean>();
+        }
+        return canCross(stones, 1, 1, mem);
+    }
+    
+    private boolean canCross(int[] stones, int idx, int k, HashMap<Integer, Boolean>[] mem) {
+        if (idx == stones.length-1) return true;
+        
+        HashMap<Integer, Boolean> map = mem[idx];
+        if (map.containsKey(k)) return map.get(k);
+        
+        for (int i = idx+1; i < stones.length; i++) {
+            int dist = stones[i] - stones[idx];
+            // to close, check next ston
+            if (dist < k-1) continue;
+            // to far already, no need to check further
+            else if (dist > k+1) break;
+            else { // dist ok
+                if (canCross(stones, i, dist, mem)) {
+                    map.put(k, true);
+                    return true;   
+                }
+            }
+        }
+        map.put(k, false);
+        return false;
+    }
+}
+
+Time Complexity : O(n)
+Space Complexity : O(n)
