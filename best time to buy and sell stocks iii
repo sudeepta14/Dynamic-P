@@ -1,0 +1,36 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+        int len = prices.length;
+        int[] dp1 = new int[prices.length];
+        int[] dp2 = new int[prices.length];
+        int max = 0;
+        int lowest = prices[0];
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] > lowest) {
+                dp1[i] = Math.max(max, prices[i] - lowest);
+                max = dp1[i];
+            } else {
+                lowest = prices[i];
+                dp1[i] = i == 0 ? 0 : dp1[i-1];
+            }
+        }
+        
+        int highest = prices[len-1];
+        max = 0;
+        for (int i = len-1; i >= 0; i--) {
+            if (prices[i] < highest) {
+                dp2[i] = Math.max(max, highest - prices[i]);
+            } else {
+                highest = prices[i];
+                dp2[i] = i == len-1 ? 0 : dp2[i+1];
+            }
+        }
+        
+        max = 0;
+        for (int i = 0; i < len; i++) {
+            max = Math.max(max, dp1[i] + dp2[i]);
+        }
+        return max;   
+    }
+}
