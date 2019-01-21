@@ -1,0 +1,22 @@
+class Solution {
+    private final int MOD = 1000000007;
+    public int numMusicPlaylists(int N, int L, int K) {
+        long[][] f = new long[L + 1][N + 1];
+        f[0][0] = 1;
+        
+        for (int i = 1; i <= L; i++) {
+            for (int j = 1; j <= N; j++) {
+                // play a new song, start from J - 1 songs, we have (N - (J - 1)) other songs to be attached next
+                f[i][j] += f[i - 1][j - 1] * (N - j + 1);
+                if (j - K > 0) {
+                    f[i][j] += f[i - 1][j] * (j - K);
+                }
+                f[i][j] %= MOD;
+            }
+        }
+        return (int)f[L][N];
+    }
+}
+
+Time Complexity : O(m*l)
+Space Complexity : O(m*l)
