@@ -1,0 +1,47 @@
+class Solution {
+    public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
+        int n = nums.length;
+        int max = Integer.MIN_VALUE;
+        int[] res = new int[3];
+        int[] leftDP = new int[n];
+        int[] rightDP = new int[n];
+        int[] sums = new int[n+1];
+        for (int i = 1; i <= n; ++i) {
+            sums[i] = sums[i-1] + nums[i-1];
+        }
+        
+        int total = sums[k];
+        leftDP[k-1] = k-1;
+        for (int i = k; i < n; ++i) {
+            if (sums[i+1] - sums[i-k+1] > total) {
+                total = sums[i+1] - sums[i-k+1];
+                leftDP[i] = i;
+            } else {
+                leftDP[i] = leftDP[i-1];
+            }
+        }
+        total = sums[n] - sums[n-k];
+        rightDP[n-k] = n-k;
+        for (int i = n-k-1; i >= 0; --i) {
+            if (sums[i+k] - sums[i] >= total) {
+                total = sums[i+k] - sums[i];
+                rightDP[i] = i;
+            } else {
+                rightDP[i] = rightDP[i+1];
+            }
+        }
+        
+        for (int i = k; i <= n-2*k; ++i) {
+            int l = leftDP[i-1];
+            int r = rightDP[i+k];
+            int sum = (sums[i+k] - sums[i]) + (sums[l+1] - sums[l+1-k]) + (sums[r+k] - sums[r]);
+            if (sum > max) {
+                max = sum;
+                res[0] = l-k+1;
+                res[1] = i;
+                res[2] = r;
+            }
+        }
+        return res;
+    }
+}
